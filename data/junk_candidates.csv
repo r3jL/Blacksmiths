@@ -1,0 +1,11 @@
+sheet_id,path,source,label,group,w,h,phash,zs_pred,own_label_prob
+0,clean/web/not_civic/not_civic__web-6a94d5f081.jpg,web,not_civic,web:not_civic__web-6a94d5f081,500,376,d48f6e227d70d581,streetlight,0.01
+1,clean/web/not_civic/not_civic__web-9a204aec5a.jpg,web,not_civic,web:not_civic__web-9a204aec5a,500,333,9e5ee9ad18d89898,road_damage,0.027
+2,clean/web/not_civic/not_civic__web-5f2d2d0349.jpg,web,not_civic,web:not_civic__web-5f2d2d0349,500,333,dd59d89893b636a0,road_damage,0.035
+3,clean/web/not_civic/not_civic__web-a2e5a1f8f8.jpg,web,not_civic,web:not_civic__web-a2e5a1f8f8,500,333,cccbd34c95372632,road_damage,0.046
+4,clean/web/not_civic/not_civic__web-8a62c601e6.jpg,web,not_civic,web:not_civic__web-8a62c601e6,500,333,a363f474a1a4f493,road_damage,0.048
+5,clean/web/pollution/pollution__web-b560dd7e49.jpg,web,pollution,web:pollution__web-b560dd7e49,500,333,c64681d08f0f7c5f,garbage,0.041
+6,clean/web/streetlight/streetlight__web-7c56672a5b.jpg,web,streetlight,web:streetlight__web-7c56672a5b,500,281,d594b2270deed113,water_issue,0.01
+7,clean/web/streetlight/streetlight__web-9d632dfbe5.jpg,web,streetlight,web:streetlight__web-9d632dfbe5,432,768,d5d5902f6bc29a98,water_issue,0.024
+8,clean/web/streetlight/streetlight__web-90dfdd1af9.jpg,web,streetlight,web:streetlight__web-90dfdd1af9,500,750,c03cc0f2b397d4ec,garbage,0.035
+9,clean/web/water_issue/water_issue__web-8e7e97a9ff.jpg,web,water_issue,web:water_issue__web-8e7e97a9ff,500,362,e88c86dceba60cc7,road_damage,0.049

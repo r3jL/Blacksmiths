@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+data/web/
+data/clean/
+data/rejected/*.jpg
+data/own/
+data/demo/
+data/*.jpg
+emb/
+*.log
+data/webtest/
+data/rejected_test/*.jpg
+.DS_Store
