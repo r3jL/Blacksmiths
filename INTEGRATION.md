@@ -1,7 +1,6 @@
 # Connecting the website to the classifier
 
-**Base URL (changes if the tunnel restarts, so ask Rejul for the current one):**
-`https://crop-neither-organize-independence.trycloudflare.com`
+**Base URL:** `https://<tunnel-name>.trycloudflare.com`. The real URL is shared privately in the team chat (not in this public repo) and changes whenever the tunnel restarts, so ask Rejul for the current one.
 
 Put it in an environment variable (`CLASSIFIER_URL`), never hard-code it.
 
