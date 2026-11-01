@@ -5,6 +5,7 @@ backend can skip the classifier and use the VLM alone.
 Run: uvicorn api:app --host 0.0.0.0 --port 8000
 """
 import asyncio
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +17,14 @@ import classifier
 TIMEOUT_S = 10
 MAX_BYTES = 10 * 1024 * 1024
 
-app = FastAPI(title="Civic image classifier")
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    await run_in_threadpool(classifier._load)  # load weights once, not on the first request
+    yield
+
+
+app = FastAPI(title="Civic image classifier", lifespan=lifespan)
 # Let the website call us straight from the browser (no cookies or credentials involved).
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET", "POST"], allow_headers=["*"])
 
@@ -25,9 +33,9 @@ def fail(status, error):
     return JSONResponse(status_code=status, content={"error": error, "fallback": "vlm_only"})
 
 
-@app.on_event("startup")
-async def warm_up():
-    await run_in_threadpool(classifier._load)  # load weights once, not on the first request
+@app.get("/")
+def root():
+    return {"service": "civic-classifier", "endpoints": ["GET /health", "POST /classify"]}
 
 
 @app.get("/health")
@@ -39,7 +47,7 @@ def health():
 
 @app.post("/classify")
 async def classify(file: UploadFile = File(...)):
-    data = await file.read()
+    data = await file.read(MAX_BYTES + 1)
     if not data:
         return fail(400, "empty file")
     if len(data) > MAX_BYTES:

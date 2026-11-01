@@ -48,8 +48,9 @@ def main():
         print(f"\ngate: wrongly rejected {rejected[civic].sum()}/{civic.sum()} real complaints, "
               f"rejected {rejected[~civic].sum()}/{(~civic).sum()} not_civic")
         auto = ~review
-        print(f"review: {review.sum()}/{len(y)} sent to humans; "
-              f"accuracy of auto-handled {(pred[auto] == y[auto]).mean():.1%}" if auto.any() else "")
+        if auto.any():
+            print(f"review: {review.sum()}/{len(y)} sent to humans; "
+                  f"accuracy of auto-handled {(pred[auto] == y[auto]).mean():.1%}")
 
         df["pred"] = [o["label"] for o in out]
         df["confidence"] = [o["confidence"] for o in out]

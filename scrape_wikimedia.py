@@ -20,6 +20,9 @@ import requests
 API = "https://commons.wikimedia.org/w/api.php"
 THUMB_WIDTH = 500  # a standard Commons thumbnail width; CLIP only needs 224px
 
+# Manifest columns, kept fixed so an interrupted first run still writes a usable header.
+FIELDS = ["file", "class", "title", "author", "license", "source_url", "query"]
+
 QUERIES = {
     "road_damage": ["pothole India", "pothole road", "pothole Delhi", "damaged road India",
                     "broken road", "road crack asphalt", "cracked pavement", "road damage"],
@@ -158,7 +161,10 @@ def main():
         have_titles = {r["title"] for r in rows}
     banned_authors = set()
     if args.set == "test":
-        with open("data/web_manifest.csv") as f:
+        train_manifest = Path("data/web_manifest.csv")
+        if not train_manifest.exists():
+            raise SystemExit("data/web_manifest.csv is missing; build the training set first.")
+        with train_manifest.open() as f:
             train_rows = list(csv.DictReader(f))
         have_titles |= {r["title"] for r in train_rows}
         banned_authors = {r["author"].strip().lower() for r in train_rows if r["author"].strip()}
@@ -208,7 +214,7 @@ def main():
                 time.sleep(0.3)
             print(f"  {cls} <- '{q}': +{got_q}")
             with manifest_path.open("w", newline="") as f:
-                w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else ["file"])
+                w = csv.DictWriter(f, fieldnames=FIELDS)
                 w.writeheader()
                 w.writerows(rows)
         print(f"== {cls}: {count} images")

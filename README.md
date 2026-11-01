@@ -28,7 +28,7 @@ Severity is **not** predicted here (it comes from a fixed formula on the VLM's o
 
 **Cleaning (`check_data.py`):** converts to RGB JPEG (max side 768), drops corrupt, tiny (< 150 px) and exact-duplicate files. Near-duplicates (perceptual hash) are merged into one group.
 
-**Leakage control (`split.py`):** photos of the same spot (from the filename) and near-duplicates always stay in the same split. The test set contains only our own photos and is used once, by `evaluate.py`.
+**Leakage control (`split.py`):** photos of the same spot (from the filename) and near-duplicates always stay in the same split. The test set is the held-out Commons set (plus any of our own photos), and it is used once, by `evaluate.py`.
 
 ## Method
 1. Embed each image with frozen CLIP ViT-B/32 (`open_clip`: `ViT-B-32`, pretrained `openai`). Horizontal flips are added as cheap augmentation for training.
@@ -90,7 +90,7 @@ python -m venv venv && source venv/bin/activate && pip install -r requirements.t
 uvicorn api:app --host 0.0.0.0 --port 8000    # serve
 curl -F "file=@photo.jpg" http://localhost:8000/classify
 ```
-The first start downloads the CLIP weights (~600 MB) into `~/.cache/huggingface`; the head itself is 36 KB (`artifacts/`).
+The first start downloads the CLIP weights (~600 MB) into `~/.cache/huggingface`; the head itself is 25 KB (`artifacts/`).
 
 ## API
 `POST /classify` (multipart field `file`, up to 10 MB) returns:
